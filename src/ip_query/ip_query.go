@@ -11,19 +11,19 @@ import (
 	"strings"
 )
 
-type IpIndex struct {
+type ipIndex struct {
 	Ip     uint32
 	Offset uint32
 }
 
 type IpRecord struct {
-	Ip          uint32
-	AreaCountry string
-	AreaCity    string
+	Ip     uint32
+	City   string
+	Detail string
 }
 
 type IpInfoService struct {
-	IpIndexes []*IpIndex
+	IpIndexes []*ipIndex
 	IpRecords []*IpRecord
 
 	termBuff []byte
@@ -32,23 +32,24 @@ type IpInfoService struct {
 }
 
 func (p *IpInfoService) Ip2Address(ip string) (country string, city string) {
-	var mid int
-	ipInt := inet_aton(ip)
+
+	intIP := inet_aton(ip)
 
 	start := 0
 	end := len(p.IpIndexes) - 1
+	var mid int
 
-	for end-start > 1 {
+	for start <= end {
 		mid = (start + end) / 2
-		if ipInt <= p.IpIndexes[mid].Ip {
-			start = mid
+		if intIP < p.IpIndexes[mid].Ip {
+			end = mid - 1
 		} else {
-			end = mid
+			start = mid + 1
 		}
 	}
-	index := p.IpIndexes[start]
-	offset := index.Offset + 4
-	return p.getAddr(offset)
+	// 最终的结果：
+	// IP[end] <= mid
+	return p.IpRecords[end].City, p.IpRecords[end].Detail
 }
 
 func (p *IpInfoService) LoadData(filename string) error {
@@ -56,76 +57,77 @@ func (p *IpInfoService) LoadData(filename string) error {
 	fid, err := os.Open(filename)
 	if err != nil {
 		return err
-		//		panic(fmt.Sprintf("File Open Error: %s", filename))
 	}
-	defer fid.Close()
 
 	p.fbuf, err = ioutil.ReadAll(fid)
+	fid.Close()
+	if err != nil {
+		return err
+	}
 
 	var indexStart uint32
 	var indexEnd uint32
 
+	// 读取索引的起止位置
 	indexStart = binary.LittleEndian.Uint32(p.fbuf[0:4])
-	fmt.Printf("Index Start: %d\n", indexStart)
-
 	indexEnd = binary.LittleEndian.Uint32(p.fbuf[4:8])
 
-	fmt.Printf("Index End: %d\n", indexEnd)
-
-	ipStr := "192.168.0.1"
-	fmt.Printf("IP: %s --> %d\n", ipStr, inet_aton(ipStr))
-
-	// 读取到了 indexStart, indexEnd
+	fmt.Printf("Index Start: %d, End: %d\n", indexStart, indexEnd)
 
 	itemNum := (indexEnd - indexStart) / 7
-	p.IpIndexes = make([]*IpIndex, itemNum, itemNum)
+	p.IpIndexes = make([]*ipIndex, itemNum, itemNum)
 	p.IpRecords = make([]*IpRecord, itemNum, itemNum)
 
 	var i uint32
 	offset := indexStart
 	for i = 0; i < itemNum; i++ {
 		offset += 7
-		index := &IpIndex{}
+		index := &ipIndex{}
 		index.Ip = binary.LittleEndian.Uint32(p.fbuf[offset:(offset + 4)])
 		index.Offset = byte3ToUint32(p.fbuf[(offset + 4):(offset + 7)])
 
 		p.IpIndexes[i] = index
 	}
 
+	fmt.Println("Index Decoding Succeed")
+
 	// https://github.com/qiniu/iconv
-	cd, err := iconv.Open("utf-8", "gbk") // convert gbk to utf-8
+	cd, err := iconv.Open("utf-8", "gbk") // 从GBK转换成为utf8
 	if err != nil {
 		fmt.Println("iconv.Open failed!")
 		return err
 	}
 	p.cd = &cd
 
-	var country string
-	var city string
-
 	p.termBuff = make([]byte, 2000)
-
 	for i = 0; i < itemNum; i++ {
 		index := p.IpIndexes[i]
+
 		recordStart := index.Offset + 4
-		country, city = p.getAddr(recordStart)
+		country, city := p.getAddr(recordStart)
+
+		//		fmt.Println("Country: ", country, "City: ", city)
+
 		record := &IpRecord{
-			Ip:          index.Ip,
-			AreaCountry: country,
-			AreaCity:    city,
+			Ip:     index.Ip,
+			City:   country,
+			Detail: city,
 		}
 		p.IpRecords[i] = record
 	}
 
+	// 清空缓存
 	p.termBuff = nil
 	p.fbuf = nil
 	p.cd.Close()
 	p.cd = nil
 
+	fmt.Printf("Data Load Complete: %d items: ", itemNum)
 	return nil
 
 }
 
+// offset: 为country, city信息所在位置的offset, 跳过了之前的IP
 func (p *IpInfoService) getAddr(offset uint32) (country string, city string) {
 
 	var idx int
