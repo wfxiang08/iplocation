@@ -6,11 +6,11 @@ import (
 	"time"
 )
 
-//  		 	    IpInfoService   vs. IpInfoServiceV1
-//    内存: 		     67M					28M
+//  		 	    IpInfoService   vs. IpInfoServiceV1   vs.  Python版本实现
+//    内存: 		     67M					28M               22M内存 * 进程数
 //    启动时间:     5.5206s			   0.3227s
-// 单次处理时间:     0.0367s			   0.1508s * 10-4
-//  对应的Python实现: 22M内存             0.30236s
+// 单次处理时间:     0.0035ms			   0.0130ms		      0.03359ms
+//  对应的Python实现:
 func main() {
 	filename := "/Users/feiwang/gowork/src/git.chunyu.me/infra/ip_utils/src/ip_query/qqwry.dat"
 
