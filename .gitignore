@@ -1,4 +1,7 @@
 /config.ini
 *.pc
 /examples/.idea
+/examples/dist
+/examples/MANIFEST
 /gen-py/
+/iplocation
