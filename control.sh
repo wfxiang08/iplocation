@@ -5,7 +5,7 @@ cd $WORKSPACE
 
 mkdir -p log
 
-module=rpc_proxy
+module=rpc_ip
 app=./iplocation
 conf=config.ini
 proxy_log=log/ip.log

@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"github.com/qiniu/iconv"
+	"github.com/wfxiang08/rpc_proxy/utils/log"
 	"io/ioutil"
 	"net"
 	"os"
@@ -39,15 +40,30 @@ func (p *IpInfoService) Ip2Address(ip string) (city string, detail string) {
 	start := 0
 	end := len(p.IpIndexes) - 1
 	var mid int
+	var result int = -1
 
-	for start+1 <= end {
+	for start <= end {
 		mid = (start + end) / 2
-		if intIP <= p.IpIndexes[mid].Ip {
-			end = mid
+		if intIP < p.IpIndexes[mid].Ip {
+			end = mid - 1
+		} else if intIP == p.IpIndexes[mid].Ip {
+			result = mid
+			break
 		} else {
-			start = mid
+			// intIP > p.IpIndexes[mid].Ip
+			start = mid + 1
 		}
 	}
+	if result == -1 {
+		// start > end
+		if end < 0 {
+			result = 0
+		} else {
+			result = end
+		}
+	}
+
+	log.Printf("Binary Search End: %d %d\n", len(p.IpIndexes), start)
 	// 最终的结果：
 	// IP[end] <= mid
 	return p.IpRecords[start].City, p.IpRecords[start].Detail
@@ -91,7 +107,7 @@ func (p *IpInfoService) LoadData(filename string) error {
 		p.IpIndexes[i] = index
 	}
 
-	fmt.Println("Index Decoding Succeed")
+	log.Println("Index Decoding Succeed")
 
 	// https://github.com/qiniu/iconv
 	cd, err := iconv.Open("utf-8", "gbk") // 从GBK转换成为utf8
@@ -124,7 +140,7 @@ func (p *IpInfoService) LoadData(filename string) error {
 	p.cd.Close()
 	p.cd = nil
 
-	fmt.Printf("Data Load Complete: %d items: ", itemNum)
+	log.Printf("Data Load Complete: %d items: ", itemNum)
 	return nil
 
 }

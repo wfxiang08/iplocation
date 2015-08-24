@@ -2,6 +2,7 @@ package ip_query
 
 import (
 	ips "git.chunyu.me/infra/ip_utils/gen-go/ip_service"
+	"github.com/wfxiang08/rpc_proxy/utils/log"
 	"strings"
 )
 
@@ -18,7 +19,11 @@ func NewHandler(ipdb string) *Handler {
 }
 
 func (p *Handler) IpToLocation(ip string) (r *ips.Location, err error) {
+	log.Printf("IpToLocation: %s\n", ip)
+
 	city, detail := p.Service.Ip2Address(ip)
+
+	log.Printf("IpToLocation: City: %s,Detail: %s\n", city, detail)
 
 	r = ips.NewLocation()
 	r.City = city

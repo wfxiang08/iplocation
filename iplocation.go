@@ -207,11 +207,14 @@ func mainBody(zkAddr string, productName string, serviceName string, frontendAdd
 		}
 
 		hasValidMsg := false
+		log.Printf("Sockets: %d\n", len(sockets))
 		for _, socket := range sockets {
 			switch socket.Socket {
 			case frontend:
 				hasValidMsg = true
-				log.Println("----->Message from front: ")
+				if verbose {
+					log.Println("----->Message from front: ")
+				}
 				msgs, err := frontend.RecvMessage(0)
 				if err != nil {
 					log.Errorf("Error when reading from frontend: %v\n", err)
@@ -230,7 +233,9 @@ func mainBody(zkAddr string, productName string, serviceName string, frontendAdd
 				procIn := thrift.NewTBinaryProtocolTransport(bufferIn)
 				bufferOut := thrift.NewTMemoryBufferLen(0)
 				procOut := thrift.NewTBinaryProtocolTransport(bufferOut)
-
+				if verbose {
+					log.Println("----->Message from front Process: ")
+				}
 				processor.Process(procIn, procOut)
 
 				result := bufferOut.Bytes()
