@@ -40,17 +40,17 @@ func (p *IpInfoService) Ip2Address(ip string) (city string, detail string) {
 	end := len(p.IpIndexes) - 1
 	var mid int
 
-	for start <= end {
+	for start+1 <= end {
 		mid = (start + end) / 2
-		if intIP < p.IpIndexes[mid].Ip {
-			end = mid - 1
+		if intIP <= p.IpIndexes[mid].Ip {
+			end = mid
 		} else {
-			start = mid + 1
+			start = mid
 		}
 	}
 	// 最终的结果：
 	// IP[end] <= mid
-	return p.IpRecords[end].City, p.IpRecords[end].Detail
+	return p.IpRecords[start].City, p.IpRecords[start].Detail
 }
 
 func (p *IpInfoService) LoadData(filename string) error {
