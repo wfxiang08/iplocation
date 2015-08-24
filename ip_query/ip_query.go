@@ -57,16 +57,19 @@ func (p *IpInfoService) Ip2Address(ip string) (city string, detail string) {
 	if result == -1 {
 		// start > end
 		if end < 0 {
+			//			fmt.Println("Result = 0")
 			result = 0
 		} else {
+			//			fmt.Printf("Result = %d\n", end)
+			//			fmt.Printf("Ip: %d, L: %d, U: %d\n", intIP, p.IpIndexes[end].Ip, p.IpIndexes[start].Ip)
 			result = end
 		}
 	}
 
-	log.Printf("Binary Search End: %d %d\n", len(p.IpIndexes), start)
+	//	log.Printf("Binary Search End: %d %d\n", len(p.IpIndexes), result)
 	// 最终的结果：
 	// IP[end] <= mid
-	return p.IpRecords[start].City, p.IpRecords[start].Detail
+	return p.IpRecords[result].City, p.IpRecords[result].Detail
 }
 
 func (p *IpInfoService) LoadData(filename string) error {

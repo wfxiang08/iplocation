@@ -22,11 +22,16 @@ func TestLdapAccount(t *testing.T) {
 			Ip:     "74.125.235.211",
 			Result: "美国",
 		},
+
+		{
+			Ip:     "127.0.0.1",
+			Result: "",
+		},
 	}
 	for _, testcase := range testcases {
 		city, _ := service.Ip2Address(testcase.Ip)
 		if city != testcase.Result {
-			fmt.Println("Invalid IP")
+			fmt.Printf("Invalid IP: %s --> %s, Exp: %s", testcase.Ip, city, testcase.Result)
 			t.Fail()
 		}
 	}
