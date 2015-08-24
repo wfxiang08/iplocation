@@ -57,6 +57,7 @@ func (p *IpInfoService) LoadData(filename string) error {
 
 	fid, err := os.Open(filename)
 	if err != nil {
+		panic(fmt.Sprintf("File Not Found: %s", filename))
 		return err
 	}
 

@@ -1,5 +1,5 @@
 /config.ini
-*.pc
+*.pyc
 /examples/.idea
 /examples/dist
 /examples/MANIFEST
