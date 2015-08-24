@@ -1,6 +1,7 @@
 package ip_query
 
 import (
+	"bufio"
 	"encoding/binary"
 	"fmt"
 	"github.com/qiniu/iconv"
@@ -31,7 +32,7 @@ type IpInfoService struct {
 	fbuf     []byte
 }
 
-func (p *IpInfoService) Ip2Address(ip string) (country string, city string) {
+func (p *IpInfoService) Ip2Address(ip string) (city string, detail string) {
 
 	intIP := inet_aton(ip)
 
@@ -59,7 +60,7 @@ func (p *IpInfoService) LoadData(filename string) error {
 		return err
 	}
 
-	p.fbuf, err = ioutil.ReadAll(fid)
+	p.fbuf, err = ioutil.ReadAll(bufio.NewReaderSize(fid, 7*1024*1024))
 	fid.Close()
 	if err != nil {
 		return err

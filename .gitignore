@@ -1,0 +1,4 @@
+/config.ini
+*.pc
+/examples/.idea
+/gen-py/
