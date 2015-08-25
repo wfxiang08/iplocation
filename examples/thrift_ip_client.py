@@ -31,12 +31,8 @@ def main():
 
     # 从配置文件读取配置
     endpoint = config[RPC_PROXY_ADDRESS]
-    endpoint = "tcp://127.0.0.1:5550"
-    endpoint = "tcp://60.29.255.199:5550"
     service = config[RPC_SERVICE]
 
-    # endpoint = "tcp://127.0.0.1:5561"
-    # service = None
 
 
     # 获取protocol
