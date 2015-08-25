@@ -1,14 +1,14 @@
 package main
 
 import (
-	ips "git.chunyu.me/infra/ip_utils/gen-go/ip_service"
-	ip_query "git.chunyu.me/infra/ip_utils/ip_query"
+	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
+	ip_query "git.chunyu.me/infra/iplocation/ip_query"
 	rpc_commons "git.chunyu.me/infra/rpc_commons"
 	utils "git.chunyu.me/infra/rpc_proxy/utils"
 )
 
 const (
-	BINARY_NAME  = "ip_service"
+	BINARY_NAME  = "iplocation"
 	SERVICE_DESC = "Chunyu Ip Service v0.1"
 	IP_DATA      = "qqwry.dat"
 )
