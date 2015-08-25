@@ -33,8 +33,8 @@ function start() {
     fi
 
     if ! [ -f $conf ];then
-        echo "Config file $conf doesn't exist, creating one."
-        cp cfg.example.json $conf
+        echo "Config file $conf doesn't exist"
+        exit -1
     fi
     nohup $app -c $conf -L $proxy_log &> $logfile &
     echo $! > $pidfile
@@ -42,9 +42,22 @@ function start() {
 }
 
 function stop() {
-    pid=`cat $pidfile`
-    kill -15 $pid
-    echo "$app stoped..."
+	check_pid
+    running=$?
+	if [ $running -gt 0 ];then
+	    pid=`cat $pidfile`
+		kill -15 $pid
+		status="0"
+		while [ "$status" == "0" ];do
+			echo "Waiting for process ${pid} ..."
+			sleep 1
+			ps -p$pid 2>&1 > /dev/null
+			status=$?
+		done
+	    echo "$app stoped..."
+	else
+		echo "$app already stoped..."
+	fi
 }
 
 function restart() {
@@ -66,7 +79,7 @@ function status() {
 function tailf() {
 	fs=(`ls -t ${proxy_log}.*`)
 	recent_file=${fs[0]}
-    tail -f $recent_file
+    tail -Fn 100 $recent_file
 }
 
 
