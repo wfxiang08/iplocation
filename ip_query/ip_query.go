@@ -5,7 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"github.com/qiniu/iconv"
-	"github.com/wfxiang08/rpc_proxy/utils/log"
+	"git.chunyu.me/infra/rpc_proxy/utils/log"
 	"io/ioutil"
 	"net"
 	"os"

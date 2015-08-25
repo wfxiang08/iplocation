@@ -2,7 +2,7 @@ package ip_query
 
 import (
 	ips "git.chunyu.me/infra/ip_utils/gen-go/ip_service"
-	"github.com/wfxiang08/rpc_proxy/utils/log"
+	"git.chunyu.me/infra/rpc_proxy/utils/log"
 	"strings"
 )
 
