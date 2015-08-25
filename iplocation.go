@@ -16,10 +16,14 @@ const (
 func main() {
 
 	rpc_commons.RpcMain(BINARY_NAME, SERVICE_DESC,
-		func(config *utils.Config) rpc_commons.RpcProcessor {
-			// 可以根据配置config来创建processor
+		// 默认的ThriftServer的配置checker
+		rpc_commons.ConfigCheckThriftService,
+
+		// 可以根据配置config来创建processor
+		func(config *utils.Config) rpc_commons.Server {
+
 			handler := ip_query.NewHandler(IP_DATA)
 			processor := ips.NewIpServiceProcessor(handler)
-			return processor
+			return rpc_commons.NewThriftRpcServer(config, processor)
 		})
 }
