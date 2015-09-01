@@ -7,12 +7,15 @@ import (
 	"bytes"
 	"fmt"
 	"git.apache.org/thrift.git/lib/go/thrift"
+	"git.chunyu.me/infra/rpc_proxy/gen-go/rpc_thrift/services"
 )
 
 // (needed to ensure safety because of naive import list construction.)
 var _ = thrift.ZERO
 var _ = fmt.Printf
 var _ = bytes.Equal
+
+var _ = services.GoUnusedProtection__
 
 type IpService interface {
 	// 根据IP获取相关的Location
@@ -197,7 +200,7 @@ func (p *ipServiceProcessorIpToLocation) Process(seqId int32, iprot, oprot thrif
 	var err2 error
 	if retval, err2 = p.handler.IpToLocation(args.Ip); err2 != nil {
 		switch v := err2.(type) {
-		case *RpcException:
+		case *services.RpcException:
 			result.Re = v
 		default:
 			x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing IpToLocation: "+err2.Error())
@@ -325,8 +328,8 @@ func (p *IpServiceIpToLocationArgs) String() string {
 //  - Success
 //  - Re
 type IpServiceIpToLocationResult struct {
-	Success *Location     `thrift:"success,0" json:"success,omitempty"`
-	Re      *RpcException `thrift:"re,1" json:"re,omitempty"`
+	Success *Location              `thrift:"success,0" json:"success,omitempty"`
+	Re      *services.RpcException `thrift:"re,1" json:"re,omitempty"`
 }
 
 func NewIpServiceIpToLocationResult() *IpServiceIpToLocationResult {
@@ -342,9 +345,9 @@ func (p *IpServiceIpToLocationResult) GetSuccess() *Location {
 	return p.Success
 }
 
-var IpServiceIpToLocationResult_Re_DEFAULT *RpcException
+var IpServiceIpToLocationResult_Re_DEFAULT *services.RpcException
 
-func (p *IpServiceIpToLocationResult) GetRe() *RpcException {
+func (p *IpServiceIpToLocationResult) GetRe() *services.RpcException {
 	if !p.IsSetRe() {
 		return IpServiceIpToLocationResult_Re_DEFAULT
 	}
@@ -404,7 +407,7 @@ func (p *IpServiceIpToLocationResult) ReadField0(iprot thrift.TProtocol) error {
 }
 
 func (p *IpServiceIpToLocationResult) ReadField1(iprot thrift.TProtocol) error {
-	p.Re = &RpcException{}
+	p.Re = &services.RpcException{}
 	if err := p.Re.Read(iprot); err != nil {
 		return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.Re), err)
 	}

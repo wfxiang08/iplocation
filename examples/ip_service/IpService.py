@@ -100,7 +100,7 @@ class Processor(Iface, TProcessor):
     result = IpToLocation_result()
     try:
       result.success = self._handler.IpToLocation(args.ip)
-    except RpcException as re:
+    except rpc_thrift.services.ttypes.RpcException as re:
       result.re = re
     oprot.writeMessageBegin("IpToLocation", TMessageType.REPLY, seqid)
     result.write(oprot)
@@ -184,7 +184,7 @@ class IpToLocation_result:
 
   thrift_spec = (
     (0, TType.STRUCT, 'success', (Location, Location.thrift_spec), None, ), # 0
-    (1, TType.STRUCT, 're', (RpcException, RpcException.thrift_spec), None, ), # 1
+    (1, TType.STRUCT, 're', (rpc_thrift.services.ttypes.RpcException, rpc_thrift.services.ttypes.RpcException.thrift_spec), None, ), # 1
   )
 
   def __init__(self, success=None, re=None,):
@@ -208,7 +208,7 @@ class IpToLocation_result:
           iprot.skip(ftype)
       elif fid == 1:
         if ftype == TType.STRUCT:
-          self.re = RpcException()
+          self.re = rpc_thrift.services.ttypes.RpcException()
           self.re.read(iprot)
         else:
           iprot.skip(ftype)

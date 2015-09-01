@@ -7,7 +7,7 @@ import (
 	"flag"
 	"fmt"
 	"git.apache.org/thrift.git/lib/go/thrift"
-	"ip_service"
+	"git.chunyu.me/infra/rpc_proxy/gen-go/ip_service"
 	"math"
 	"net"
 	"net/url"

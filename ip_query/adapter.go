@@ -2,6 +2,7 @@ package ip_query
 
 import (
 	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
+	// services "git.chunyu.me/infra/rpc_proxy/gen-go/rpc_thrift/services"
 	"git.chunyu.me/infra/rpc_proxy/utils/log"
 	"strings"
 )
