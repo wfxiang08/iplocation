@@ -10,7 +10,7 @@ struct Location {
 	3:string detail
 }
 
-service IpService {
+service IpService extends rpc_thrift.services.RpcServiceBase {
 	/**
 	 * 根据IP获取相关的Location
 	 */

@@ -26,6 +26,7 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
   print('')
   print('Functions:')
   print('  Location IpToLocation(string ip)')
+  print('  void ping()')
   print('')
   sys.exit(0)
 
@@ -87,6 +88,12 @@ if cmd == 'IpToLocation':
     print('IpToLocation requires 1 args')
     sys.exit(1)
   pp.pprint(client.IpToLocation(args[0],))
+
+elif cmd == 'ping':
+  if len(args) != 0:
+    print('ping requires 0 args')
+    sys.exit(1)
+  pp.pprint(client.ping())
 
 else:
   print('Unrecognized method %s' % cmd)

@@ -8,6 +8,7 @@
 #
 
 from thrift.Thrift import TType, TMessageType, TException, TApplicationException
+import rpc_thrift.services.RpcServiceBase
 from ttypes import *
 from thrift.Thrift import TProcessor
 from thrift.transport import TTransport
@@ -18,7 +19,7 @@ except:
   fastbinary = None
 
 
-class Iface:
+class Iface(rpc_thrift.services.RpcServiceBase.Iface):
   def IpToLocation(self, ip):
     """
     根据IP获取相关的Location
@@ -29,12 +30,9 @@ class Iface:
     pass
 
 
-class Client(Iface):
+class Client(rpc_thrift.services.RpcServiceBase.Client, Iface):
   def __init__(self, iprot, oprot=None):
-    self._iprot = self._oprot = iprot
-    if oprot is not None:
-      self._oprot = oprot
-    self._seqid = 0
+    rpc_thrift.services.RpcServiceBase.Client.__init__(self, iprot, oprot)
 
   def IpToLocation(self, ip):
     """
@@ -72,10 +70,9 @@ class Client(Iface):
     raise TApplicationException(TApplicationException.MISSING_RESULT, "IpToLocation failed: unknown result")
 
 
-class Processor(Iface, TProcessor):
+class Processor(rpc_thrift.services.RpcServiceBase.Processor, Iface, TProcessor):
   def __init__(self, handler):
-    self._handler = handler
-    self._processMap = {}
+    rpc_thrift.services.RpcServiceBase.Processor.__init__(self, handler)
     self._processMap["IpToLocation"] = Processor.process_IpToLocation
 
   def process(self, iprot, oprot):

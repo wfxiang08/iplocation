@@ -18,6 +18,8 @@ var _ = bytes.Equal
 var _ = services.GoUnusedProtection__
 
 type IpService interface {
+	services.RpcServiceBase
+
 	// 根据IP获取相关的Location
 	//
 	// Parameters:
@@ -26,29 +28,15 @@ type IpService interface {
 }
 
 type IpServiceClient struct {
-	Transport       thrift.TTransport
-	ProtocolFactory thrift.TProtocolFactory
-	InputProtocol   thrift.TProtocol
-	OutputProtocol  thrift.TProtocol
-	SeqId           int32
+	*services.RpcServiceBaseClient
 }
 
 func NewIpServiceClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *IpServiceClient {
-	return &IpServiceClient{Transport: t,
-		ProtocolFactory: f,
-		InputProtocol:   f.GetProtocol(t),
-		OutputProtocol:  f.GetProtocol(t),
-		SeqId:           0,
-	}
+	return &IpServiceClient{RpcServiceBaseClient: services.NewRpcServiceBaseClientFactory(t, f)}
 }
 
 func NewIpServiceClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *IpServiceClient {
-	return &IpServiceClient{Transport: t,
-		ProtocolFactory: nil,
-		InputProtocol:   iprot,
-		OutputProtocol:  oprot,
-		SeqId:           0,
-	}
+	return &IpServiceClient{RpcServiceBaseClient: services.NewRpcServiceBaseClientProtocol(t, iprot, oprot)}
 }
 
 // 根据IP获取相关的Location
@@ -135,47 +123,13 @@ func (p *IpServiceClient) recvIpToLocation() (value *Location, err error) {
 }
 
 type IpServiceProcessor struct {
-	processorMap map[string]thrift.TProcessorFunction
-	handler      IpService
-}
-
-func (p *IpServiceProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
-	p.processorMap[key] = processor
-}
-
-func (p *IpServiceProcessor) GetProcessorFunction(key string) (processor thrift.TProcessorFunction, ok bool) {
-	processor, ok = p.processorMap[key]
-	return processor, ok
-}
-
-func (p *IpServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunction {
-	return p.processorMap
+	*services.RpcServiceBaseProcessor
 }
 
 func NewIpServiceProcessor(handler IpService) *IpServiceProcessor {
-
-	self2 := &IpServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self2.processorMap["IpToLocation"] = &ipServiceProcessorIpToLocation{handler: handler}
+	self2 := &IpServiceProcessor{services.NewRpcServiceBaseProcessor(handler)}
+	self2.AddToProcessorMap("IpToLocation", &ipServiceProcessorIpToLocation{handler: handler})
 	return self2
-}
-
-func (p *IpServiceProcessor) Process(iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	name, _, seqId, err := iprot.ReadMessageBegin()
-	if err != nil {
-		return false, err
-	}
-	if processor, ok := p.GetProcessorFunction(name); ok {
-		return processor.Process(seqId, iprot, oprot)
-	}
-	iprot.Skip(thrift.STRUCT)
-	iprot.ReadMessageEnd()
-	x3 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
-	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x3.Write(oprot)
-	oprot.WriteMessageEnd()
-	oprot.Flush()
-	return false, x3
-
 }
 
 type ipServiceProcessorIpToLocation struct {

@@ -18,7 +18,9 @@ func NewHandler(ipdb string) *Handler {
 	p.Service.LoadData(ipdb)
 	return p
 }
-
+func (p *Handler) Ping() (err error) {
+	return nil
+}
 func (p *Handler) IpToLocation(ip string) (r *ips.Location, err error) {
 	log.Printf("IpToLocation: %s\n", ip)
 
