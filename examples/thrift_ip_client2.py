@@ -16,8 +16,7 @@ def main():
 
     # 从配置文件读取配置
     endpoint = config[RPC_PROXY_ADDRESS]
-    # endpoint = "tcp://60.29.255.199:5550"
-    endpoint = "/usr/local/rpc_proxy/test_proxy.sock"
+    endpoint = "127.0.0.1:5550"
     service = config[RPC_SERVICE]
 
     get_base_protocol(endpoint)
@@ -27,6 +26,7 @@ def main():
 
     total_times = 100
     t1 = time.time()
+    result_set = set()
     for i  in range(0, total_times):
         print "index: ", i
         try:
@@ -42,22 +42,8 @@ def main():
         if i % 200 == 0:
             print "QPS: %.2f" % (i / (time.time() - t1), )
 
+    print "Total Result: ", len(result_set)
     t = time.time() - t1
     print "Elapsed: ",  t / total_times
-    
-    
-    t1 = time.time()
-    for i  in range(0, total_times):
-        print "index: ", i
-        try:
-            client.ping()
-        except Exception as e:
-            print "Exception: ", e
-
-        if i % 200 == 0:
-            print "QPS: %.2f" % (i / (time.time() - t1), )
-
-    t = time.time() - t1
-    print "Elapsed: ",  t / total_times    
 if __name__ == "__main__":
     main()

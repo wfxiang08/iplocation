@@ -5,7 +5,6 @@ cd $WORKSPACE
 
 mkdir -p log
 
-module=rpc_ip
 app=./iplocation
 conf=config.ini
 proxy_log=log/ip.log
@@ -76,10 +75,9 @@ function status() {
     fi
 }
 
-function tailf() {
-	fs=(`ls -t ${proxy_log}.*`)
-	recent_file=${fs[0]}
-    tail -Fn 100 $recent_file
+function tailf() {	
+	date=`date +"%Y%m%d"`
+	tail -Fn 200 "${proxy_log}-${date}"	
 }
 
 
