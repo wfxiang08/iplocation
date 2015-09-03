@@ -9,18 +9,17 @@ from rpc_thrift.utils import get_service_protocol
 from rpc_thrift.utils import get_base_protocol
 
 """
-Unix Domain Socket:
-	测试 IpToLocation 接口的时延:
-	Elapsed:  0.194439888ms
+1. iplocation service Unix Domain Socket:
+    测试 IpToLocation 接口的时延:
+    Elapsed: 0.197ms
+    测试 ping 接口的时延:
+    Elapsed: 0.096ms
 
-	测试 ping 接口的时延:
-	Elapsed:  0.0912594795227ms
-
-Local Loop:
-	测试 IpToLocation 接口的时延:
-	Elapsed:  0.257439613342ms
-	测试 ping 接口的时延:
-	Elapsed:  0.113639831543ms
+2. Local Loop:
+    测试 IpToLocation 接口的时延:
+    Elapsed: 0.211ms
+    测试 ping 接口的时延:
+    Elapsed: 0.128ms
 """
 
 def main():
@@ -31,7 +30,7 @@ def main():
     # 从配置文件读取配置
     endpoint = config[RPC_PROXY_ADDRESS]
     endpoint = "127.0.0.1:5563"
-    #endpoint="/Users/feiwang/gowork/src/git.chunyu.me/infra/iplocation/aa.sock"
+    # endpoint="/Users/feiwang/gowork/src/git.chunyu.me/infra/iplocation/aa.sock"
     service = config[RPC_SERVICE]
 
     get_base_protocol(endpoint)
@@ -51,7 +50,7 @@ def main():
         except Exception as e:
             print "Exception: ", e
     t = time.time() - t1
-    print "Elapsed: ",  t / total_times
+    print "Elapsed: %.3fms" % (t / total_times * 1000)
     
     print "测试 ping 接口的时延:"
     t1 = time.time()
@@ -61,7 +60,7 @@ def main():
         except Exception as e:
             print "Exception: ", e
     t = time.time() - t1
-    print "Elapsed: ",  t / total_times
+    print "Elapsed: %.3fms" % (t / total_times * 1000)
     
 if __name__ == "__main__":
     main()
