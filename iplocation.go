@@ -13,6 +13,11 @@ const (
 	IP_DATA      = "qqwry.dat"
 )
 
+var (
+	buildDate  string
+	gitVersion string
+)
+
 func main() {
 
 	proxy.RpcMain(BINARY_NAME, SERVICE_DESC,
@@ -24,5 +29,5 @@ func main() {
 			handler := ip_query.NewHandler(IP_DATA)
 			processor := ips.NewIpServiceProcessor(handler)
 			return proxy.NewThriftRpcServer(config, processor)
-		})
+		}, buildDate, gitVersion)
 }

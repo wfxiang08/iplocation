@@ -1,0 +1,1 @@
+go build -ldflags "-X main.buildDate=`date -u +%Y%m%d%H%M%S` -X main.gitVersion=`git -C git.chunyu.me/infra/iplocation rev-parse HEAD`" git.chunyu.me/infra/iplocation/iplocation.go
