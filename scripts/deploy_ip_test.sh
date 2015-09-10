@@ -15,7 +15,7 @@ scp iplocation root@${host_name}:/usr/local/ip/iplocation
 
 
 # 拷贝脚本
-scp git.chunyu.me/infra/iplocation/scripts/control.sh  root@${host_name}:/usr/local/ip/
+scp git.chunyu.me/infra/iplocation/control.sh  root@${host_name}:/usr/local/ip/
 scp git.chunyu.me/infra/iplocation/ip_query/qqwry.dat  root@${host_name}:/usr/local/ip/qqwry.dat
 scp git.chunyu.me/infra/iplocation/config.test.ini   root@${host_name}:/usr/local/ip/config.ini
 # 只在centos上有效, ubuntu上存在问题
