@@ -35,7 +35,7 @@ function start() {
         echo "Config file $conf doesn't exist"
         exit -1
     fi
-    nohup $app -c $conf -L $proxy_log &> $logfile &
+    nohup $app -c $conf -L $proxy_log  --profile-addr=127.0.0.1:7171 &> $logfile &
     echo $! > $pidfile
     echo "$app started..., pid=$!"
 }

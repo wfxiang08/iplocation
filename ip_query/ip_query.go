@@ -96,6 +96,8 @@ func (p *IpInfoService) LoadData(filename string) error {
 	fmt.Printf("Index Start: %d, End: %d\n", indexStart, indexEnd)
 
 	itemNum := (indexEnd - indexStart) / 7
+	// 3,579,904
+	// 3,579,904
 	p.IpIndexes = make([]*ipIndex, itemNum, itemNum)
 	p.IpRecords = make([]*IpRecord, itemNum, itemNum)
 

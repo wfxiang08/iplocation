@@ -22,19 +22,35 @@ func (p *IpInfoServiceV1) Ip2Address(ip string) (country string, city string) {
 	start := 0
 	end := len(p.IpIndexes) - 1
 	var mid int
+	var result int = -1
 
 	for start <= end {
 		mid = (start + end) / 2
 		if intIP < p.IpIndexes[mid].Ip {
 			end = mid - 1
+		} else if intIP == p.IpIndexes[mid].Ip {
+			result = mid
+			break
 		} else {
+			// intIP > p.IpIndexes[mid].Ip
 			start = mid + 1
+		}
+	}
+	if result == -1 {
+		// start > end
+		if end < 0 {
+			//			fmt.Println("Result = 0")
+			result = 0
+		} else {
+			//			fmt.Printf("Result = %d\n", end)
+			//			fmt.Printf("Ip: %d, L: %d, U: %d\n", intIP, p.IpIndexes[end].Ip, p.IpIndexes[start].Ip)
+			result = end
 		}
 	}
 
 	// 最终的结果：
 	// IP[end] <= intIP
-	index := p.IpIndexes[end]
+	index := p.IpIndexes[result]
 	return p.getAddr(index.Offset + 4)
 }
 
