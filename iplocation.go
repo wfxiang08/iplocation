@@ -10,7 +10,7 @@ import (
 const (
 	BINARY_NAME  = "iplocation"
 	SERVICE_DESC = "Chunyu Ip Service v0.1"
-	IP_DATA      = "qqwry.dat"
+	IP_DATA      = "/usr/local/ip/qqwry.dat"
 )
 
 var (
