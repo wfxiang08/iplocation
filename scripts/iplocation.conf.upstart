@@ -13,7 +13,7 @@ console output
 #setuid work
 #setgid work
 
-exec /usr/local/ip/iplocation -c /usr/local/ip/config.ini -L /usr/local/ip/log/ip.log &> /usr/local/ip/log/app.log
+exec /usr/local/ip/iplocation --work-dir /usr/local/ip@upstart -c /usr/local/ip/config.ini -L /usr/local/ip/log/ip.log &> /usr/local/ip/log/app.log
 
 pre-start script
         logger "start iplocation"
