@@ -22,7 +22,7 @@ const (
 func (p *IpInfoServiceV1) Ip2Address(ip string) (country string, city string) {
 
 	intIP := inet_aton(ip)
-	if ip == 0 {
+	if intIP == 0 {
 		return EMPTY_STR, EMPTY_STR
 	}
 
