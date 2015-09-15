@@ -3,7 +3,7 @@ package ip_query
 import (
 	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
 	// services "git.chunyu.me/infra/rpc_proxy/gen-go/rpc_thrift/services"
-	"git.chunyu.me/infra/rpc_proxy/utils/log"
+	//	"git.chunyu.me/infra/rpc_proxy/utils/log"
 	"strings"
 )
 
@@ -22,11 +22,11 @@ func (p *Handler) Ping() (err error) {
 	return nil
 }
 func (p *Handler) IpToLocation(ip string) (r *ips.Location, err error) {
-	log.Printf("IpToLocation: %s\n", ip)
+	//	log.Printf("IpToLocation: %s\n", ip)
 
 	city, detail := p.Service.Ip2Address(ip)
 
-	log.Printf("IpToLocation: City: %s,Detail: %s\n", city, detail)
+	//	log.Printf("IpToLocation: City: %s,Detail: %s\n", city, detail)
 
 	r = ips.NewLocation()
 	r.City = city
