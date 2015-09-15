@@ -36,6 +36,9 @@ type IpInfoService struct {
 func (p *IpInfoService) Ip2Address(ip string) (city string, detail string) {
 
 	intIP := inet_aton(ip)
+	if intIP == 0 {
+		return EMPTY_STR, EMPTY_STR
+	}
 
 	start := 0
 	end := len(p.IpIndexes) - 1
@@ -64,6 +67,12 @@ func (p *IpInfoService) Ip2Address(ip string) (city string, detail string) {
 			//			fmt.Printf("Ip: %d, L: %d, U: %d\n", intIP, p.IpIndexes[end].Ip, p.IpIndexes[start].Ip)
 			result = end
 		}
+	}
+
+	if result >= 0 && result < len(p.IpIndexes) {
+		return p.IpRecords[result].City, p.IpRecords[result].Detail
+	} else {
+		return EMPTY_STR, EMPTY_STR
 	}
 
 	//	log.Printf("Binary Search End: %d %d\n", len(p.IpIndexes), result)

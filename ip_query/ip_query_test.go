@@ -14,7 +14,7 @@ import (
 func TestIpLocation(t *testing.T) {
 
 	filename := "qqwry.dat"
-	service := &IpInfoServiceV1{}
+	service := &IpInfoService{}
 	_ = service.LoadData(filename)
 
 	testcases := []struct {
@@ -23,7 +23,7 @@ func TestIpLocation(t *testing.T) {
 	}{
 		{
 			Ip:     "0.0.0.0",
-			Result: "澳大利亚",
+			Result: "",
 		},
 		{
 			Ip:     "119.189.65.58",

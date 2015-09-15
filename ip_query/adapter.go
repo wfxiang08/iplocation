@@ -8,12 +8,12 @@ import (
 )
 
 type Handler struct {
-	Service *IpInfoServiceV1
+	Service *IpInfoService
 }
 
 func NewHandler(ipdb string) *Handler {
 	p := &Handler{
-		Service: &IpInfoServiceV1{},
+		Service: &IpInfoService{},
 	}
 	p.Service.LoadData(ipdb)
 	return p
