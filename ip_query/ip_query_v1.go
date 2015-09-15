@@ -15,9 +15,16 @@ type IpInfoServiceV1 struct {
 	fbuf []byte
 }
 
+const (
+	EMPTY_STR = ""
+)
+
 func (p *IpInfoServiceV1) Ip2Address(ip string) (country string, city string) {
 
 	intIP := inet_aton(ip)
+	if ip == 0 {
+		return EMPTY_STR, EMPTY_STR
+	}
 
 	start := 0
 	end := len(p.IpIndexes) - 1
@@ -50,8 +57,12 @@ func (p *IpInfoServiceV1) Ip2Address(ip string) (country string, city string) {
 
 	// 最终的结果：
 	// IP[end] <= intIP
-	index := p.IpIndexes[result]
-	return p.getAddr(index.Offset + 4)
+	if result >= 0 && result < len(p.IpIndexes) {
+		index := p.IpIndexes[result]
+		return p.getAddr(index.Offset + 4)
+	} else {
+		return EMPTY_STR, EMPTY_STR
+	}
 }
 
 func (p *IpInfoServiceV1) LoadData(filename string) error {

@@ -2,20 +2,35 @@ package ip_query
 
 import (
 	"fmt"
+
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-func TestLdapAccount(t *testing.T) {
+//
+// go test git.chunyu.me/infra/iplocation/ip_query -v -run "TestIpLocation"
+//
+
+func TestIpLocation(t *testing.T) {
 
 	filename := "qqwry.dat"
-	service := &IpInfoService{}
+	service := &IpInfoServiceV1{}
 	_ = service.LoadData(filename)
 
 	testcases := []struct {
 		Ip     string
 		Result string
 	}{
-		{Ip: "60.29.255.197",
+		{
+			Ip:     "0.0.0.0",
+			Result: "澳大利亚",
+		},
+		{
+			Ip:     "119.189.65.58",
+			Result: "山东省聊城市",
+		},
+		{
+			Ip:     "60.29.255.197",
 			Result: "天津市",
 		},
 		{
@@ -25,14 +40,14 @@ func TestLdapAccount(t *testing.T) {
 
 		{
 			Ip:     "127.0.0.1",
-			Result: "",
+			Result: "IANA",
 		},
 	}
 	for _, testcase := range testcases {
 		city, _ := service.Ip2Address(testcase.Ip)
 		if city != testcase.Result {
-			fmt.Printf("Invalid IP: %s --> %s, Exp: %s", testcase.Ip, city, testcase.Result)
-			t.Fail()
+			fmt.Printf("Invalid IP: %s --> %s, Exp: %s\n", testcase.Ip, city, testcase.Result)
+			assert.Fail(t, "Error Ip Mapping")
 		}
 	}
 
