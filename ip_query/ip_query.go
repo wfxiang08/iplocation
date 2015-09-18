@@ -3,6 +3,7 @@ package ip_query
 import (
 	"bufio"
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"git.chunyu.me/infra/rpc_proxy/utils/log"
 	"github.com/qiniu/iconv"
@@ -35,7 +36,7 @@ type IpInfoService struct {
 
 func (p *IpInfoService) Ip2Address(ip string) (city string, detail string) {
 
-	intIP := inet_aton(ip)
+	intIP, _ := inet_aton(ip)
 	if intIP == 0 {
 		return EMPTY_STR, EMPTY_STR
 	}
@@ -74,11 +75,6 @@ func (p *IpInfoService) Ip2Address(ip string) (city string, detail string) {
 	} else {
 		return EMPTY_STR, EMPTY_STR
 	}
-
-	//	log.Printf("Binary Search End: %d %d\n", len(p.IpIndexes), result)
-	// 最终的结果：
-	// IP[end] <= mid
-	return p.IpRecords[result].City, p.IpRecords[result].Detail
 }
 
 func (p *IpInfoService) LoadData(filename string) error {
@@ -224,20 +220,28 @@ func inet_ntoa(ipnr int64) net.IP {
 	return net.IPv4(bytes[3], bytes[2], bytes[1], bytes[0])
 }
 
-func inet_aton(ipnr string) uint32 {
+func inet_aton(ipnr string) (intIp uint32, err error) {
 	bits := strings.Split(ipnr, ".")
+	if len(bits) != 4 {
+		return 0, errors.New("Invalid IP Address")
+	}
+	var (
+		sum uint32
+		b0  int
+	)
+	shift := uint32(24)
+	for i := 0; i < 4; i++ {
+		if b0, err = strconv.Atoi(bits[i]); err != nil {
+			return 0, err
+		} else {
+			if b0 < 0 || b0 > 255 {
+				return 0, errors.New("Invalid IP Address")
+			}
 
-	b0, _ := strconv.Atoi(bits[0])
-	b1, _ := strconv.Atoi(bits[1])
-	b2, _ := strconv.Atoi(bits[2])
-	b3, _ := strconv.Atoi(bits[3])
+			sum += uint32(b0) << shift
+			shift -= 8
+		}
+	}
 
-	var sum uint32
-
-	sum += uint32(b0) << 24
-	sum += uint32(b1) << 16
-	sum += uint32(b2) << 8
-	sum += uint32(b3)
-
-	return sum
+	return sum, nil
 }

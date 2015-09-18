@@ -22,6 +22,18 @@ func TestIpLocation(t *testing.T) {
 		Result string
 	}{
 		{
+			Ip:     "",
+			Result: "",
+		},
+		{
+			Ip:     "Invalid IP",
+			Result: "",
+		},
+		{
+			Ip:     "1000.1000.0.1000",
+			Result: "",
+		},
+		{
 			Ip:     "0.0.0.0",
 			Result: "",
 		},

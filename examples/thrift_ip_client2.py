@@ -16,7 +16,7 @@ def main():
 
     # 从配置文件读取配置
     endpoint = config[RPC_PROXY_ADDRESS]
-    endpoint = "127.0.0.1:5550"
+    endpoint = "60.29.255.199:5550"
     service = config[RPC_SERVICE]
 
     get_base_protocol(endpoint)
