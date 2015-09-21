@@ -59,8 +59,8 @@ def main():
     # 从配置文件读取配置
     endpoint = config[RPC_PROXY_ADDRESS]
     # endpoint = "tcp://60.29.255.199:5550"
-    endpoint = "/usr/local/rpc_proxy/test_proxy.sock"
-    endpoint = "127.0.0.1:5550"
+    endpoint = "/usr/local/rpc_proxy/proxy.sock"
+    # endpoint = "127.0.0.1:5550"
     service = config[RPC_SERVICE]
 
     get_base_protocol(endpoint)
