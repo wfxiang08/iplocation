@@ -66,6 +66,7 @@ func main() {
 			err := client.Ping1()
 			if err != nil {
 				fmt.Println("Error: ", err)
+				break
 			}
 		}
 		t2 := time.Now().UnixNano()
