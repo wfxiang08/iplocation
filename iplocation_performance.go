@@ -26,7 +26,7 @@ func main() {
 		protocol thrift.TProtocol
 	)
 	wait := &sync.WaitGroup{}
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 1; i++ {
 		wait.Add(1)
 		go func() {
 			var client *ips.IpServiceClient
@@ -61,6 +61,7 @@ func main() {
 			client = ips.NewIpServiceClientProtocol(transport, protocol, protocol)
 			client.SeqId = int32(i * 100000)
 
+			t1 := time.Now().UnixNano()
 			for k := 0; k < 10000; k++ {
 				interval := rand.Int63n(100)
 				time.Sleep(time.Duration(time.Microsecond * time.Duration(interval)))
@@ -76,6 +77,8 @@ func main() {
 					break
 				}
 			}
+			t2 := time.Now().UnixNano()
+			fmt.Printf("T: %.3fms", float64(t2-t1)*0.000001)
 
 			wait.Done()
 		}()
