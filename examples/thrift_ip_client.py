@@ -83,12 +83,21 @@ def main():
     t = time.time() - t1
     print "Elapsed: %.3fms" % (t / total_times * 1000)
     
-    
-    print "测试 ping 接口的时延:"    
+    print "测试 ping 接口的时延:"
     t1 = time.time()
     for i  in range(0, total_times):
         try:
             client.ping()
+        except Exception as e:
+            print "Exception: ", e
+    t = time.time() - t1
+    print "Elapsed: %.3fms" % (t / total_times * 1000)
+
+    print "测试 ping1 接口的时延:"
+    t1 = time.time()
+    for i  in range(0, total_times):
+        try:
+            client.ping1()
         except Exception as e:
             print "Exception: ", e
     t = time.time() - t1

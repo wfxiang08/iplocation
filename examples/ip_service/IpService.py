@@ -9,7 +9,8 @@
 
 from thrift.Thrift import TType, TMessageType, TException, TApplicationException
 import rpc_thrift.services.RpcServiceBase
-from ttypes import *
+from ip_service.ttypes import *
+from rpc_thrift.services.RpcServiceBase import ping_args, ping_result
 from thrift.Thrift import TProcessor
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol, TProtocol
@@ -33,6 +34,31 @@ class Iface(rpc_thrift.services.RpcServiceBase.Iface):
 class Client(rpc_thrift.services.RpcServiceBase.Client, Iface):
   def __init__(self, iprot, oprot=None):
     rpc_thrift.services.RpcServiceBase.Client.__init__(self, iprot, oprot)
+
+  def ping1(self):
+    self.send_ping1()
+    self.recv_ping1()
+
+  def send_ping1(self):
+    self._oprot.writeMessageBegin('ping', 20, self._seqid)
+    args =  ping_args()
+    args.write(self._oprot)
+    self._oprot.writeMessageEnd()
+    self._oprot.trans.flush()
+
+  def recv_ping1(self):
+    iprot = self._iprot
+    (fname, mtype, rseqid) = iprot.readMessageBegin()
+    if mtype == TMessageType.EXCEPTION:
+      x = TApplicationException()
+      x.read(iprot)
+      iprot.readMessageEnd()
+      raise x
+    result = ping_result()
+    result.read(iprot)
+    iprot.readMessageEnd()
+    return
+
 
   def IpToLocation(self, ip):
     """
