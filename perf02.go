@@ -6,8 +6,6 @@ import (
 	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
 	//	ip_query "git.chunyu.me/infra/iplocation/ip_query"
 	proxy "git.chunyu.me/infra/rpc_proxy/proxy"
-	"git.chunyu.me/infra/rpc_proxy/utils/log"
-	"math/rand"
 	"sync"
 	"time"
 )
@@ -59,10 +57,10 @@ func main() {
 		}
 
 		client = ips.NewIpServiceClientProtocol(transport, protocol, protocol)
-		client.SeqId = int32(i * 100000)
+		client.SeqId = 0
 
 		t1 := time.Now().UnixNano()
-		iteration = 100000
+		iteration := 100000
 		for k := 0; k < iteration; k++ {
 
 			err := client.Ping1()
