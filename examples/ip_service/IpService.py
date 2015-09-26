@@ -7,17 +7,17 @@
 #  options string: py
 #
 
+from __future__ import absolute_import
 from thrift.Thrift import TType, TMessageType, TException, TApplicationException
 import rpc_thrift.services.RpcServiceBase
 from ip_service.ttypes import *
-from rpc_thrift.services.RpcServiceBase import ping_args, ping_result
 from thrift.Thrift import TProcessor
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol, TProtocol
 try:
-  from thrift.protocol import fastbinary
+  from rpc_thrift.cython.cybinary_protocol import TCyBinaryProtocol
 except:
-  fastbinary = None
+  TCyBinaryProtocol = None
 
 
 class Iface(rpc_thrift.services.RpcServiceBase.Iface):
@@ -34,31 +34,6 @@ class Iface(rpc_thrift.services.RpcServiceBase.Iface):
 class Client(rpc_thrift.services.RpcServiceBase.Client, Iface):
   def __init__(self, iprot, oprot=None):
     rpc_thrift.services.RpcServiceBase.Client.__init__(self, iprot, oprot)
-
-  def ping1(self):
-    self.send_ping1()
-    self.recv_ping1()
-
-  def send_ping1(self):
-    self._oprot.writeMessageBegin('ping', 20, self._seqid)
-    args =  ping_args()
-    args.write(self._oprot)
-    self._oprot.writeMessageEnd()
-    self._oprot.trans.flush()
-
-  def recv_ping1(self):
-    iprot = self._iprot
-    (fname, mtype, rseqid) = iprot.readMessageBegin()
-    if mtype == TMessageType.EXCEPTION:
-      x = TApplicationException()
-      x.read(iprot)
-      iprot.readMessageEnd()
-      raise x
-    result = ping_result()
-    result.read(iprot)
-    iprot.readMessageEnd()
-    return
-
 
   def IpToLocation(self, ip):
     """
@@ -148,8 +123,8 @@ class IpToLocation_args:
     self.ip = ip
 
   def read(self, iprot):
-    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
-      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+    if iprot.__class__ == TCyBinaryProtocol and self.thrift_spec is not None:
+      iprot.read_struct(self)
       return
     iprot.readStructBegin()
     while True:
@@ -167,8 +142,8 @@ class IpToLocation_args:
     iprot.readStructEnd()
 
   def write(self, oprot):
-    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
-      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+    if oprot.__class__ == TCyBinaryProtocol and self.thrift_spec is not None:
+      oprot.write_struct(self)
       return
     oprot.writeStructBegin('IpToLocation_args')
     if self.ip is not None:
@@ -215,8 +190,8 @@ class IpToLocation_result:
     self.re = re
 
   def read(self, iprot):
-    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
-      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+    if iprot.__class__ == TCyBinaryProtocol and self.thrift_spec is not None:
+      iprot.read_struct(self)
       return
     iprot.readStructBegin()
     while True:
@@ -241,8 +216,8 @@ class IpToLocation_result:
     iprot.readStructEnd()
 
   def write(self, oprot):
-    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
-      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+    if oprot.__class__ == TCyBinaryProtocol and self.thrift_spec is not None:
+      oprot.write_struct(self)
       return
     oprot.writeStructBegin('IpToLocation_result')
     if self.success is not None:

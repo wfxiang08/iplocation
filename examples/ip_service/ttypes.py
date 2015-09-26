@@ -7,6 +7,7 @@
 #  options string: py
 #
 
+from __future__ import absolute_import
 from thrift.Thrift import TType, TMessageType, TException, TApplicationException
 import rpc_thrift.services.ttypes
 
@@ -14,9 +15,9 @@ import rpc_thrift.services.ttypes
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol, TProtocol
 try:
-  from thrift.protocol import fastbinary
+  from rpc_thrift.cython.cybinary_protocol import TCyBinaryProtocol
 except:
-  fastbinary = None
+  TCyBinaryProtocol = None
 
 
 
@@ -43,8 +44,8 @@ class Location:
     self.detail = detail
 
   def read(self, iprot):
-    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
-      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+    if iprot.__class__ == TCyBinaryProtocol and self.thrift_spec is not None:
+      iprot.read_struct(self)
       return
     iprot.readStructBegin()
     while True:
@@ -72,8 +73,8 @@ class Location:
     iprot.readStructEnd()
 
   def write(self, oprot):
-    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
-      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+    if oprot.__class__ == TCyBinaryProtocol and self.thrift_spec is not None:
+      oprot.write_struct(self)
       return
     oprot.writeStructBegin('Location')
     if self.city is not None:
