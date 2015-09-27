@@ -44,6 +44,6 @@ def main():
 
     t = time.time() - t1
     print "Elapsed: %.3fms",  (t / total_times * 1000.0)
-    
+
 if __name__ == "__main__":
     main()
