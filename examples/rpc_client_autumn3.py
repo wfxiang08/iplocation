@@ -30,26 +30,20 @@ def main():
     client = Client(protocol)
 
 
-    total_times = 100
+    total_times = 1000
     t1 = time.time()
-    result_set = set()
     for i  in range(0, total_times):
-        print "index: ", i
         try:
 
             result = client.IpToLocation("60.29.255.197")
-            print result.city
-            print result.province
-            print result.detail
-
         except Exception as e:
             print "Exception: ", e
 
         if i % 200 == 0:
             print "QPS: %.2f" % (i / (time.time() - t1), )
 
-    print "Total Result: ", len(result_set)
     t = time.time() - t1
-    print "Elapsed: ",  t / total_times
+    print "Elapsed: %.3fms",  (t / total_times * 1000.0)
+    
 if __name__ == "__main__":
     main()
