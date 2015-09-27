@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(
       name='chunyu_ip',
-      version="0.0.2",
+      version="1.0.0",
       author='wangfei',
       author_email="wangfei@chunyu.me",
       url='',

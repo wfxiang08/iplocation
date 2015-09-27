@@ -4,7 +4,7 @@
 #
 # DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
 #
-#  options string: py
+#  options string: py:slots
 #
 
 from __future__ import absolute_import
@@ -114,6 +114,10 @@ class IpToLocation_args:
    - ip
   """
 
+  __slots__ = [ 
+    'ip',
+   ]
+
   thrift_spec = (
     None, # 0
     (1, TType.STRING, 'ip', None, None, ), # 1
@@ -163,15 +167,23 @@ class IpToLocation_args:
     return value
 
   def __repr__(self):
-    L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+    L = ['%s=%r' % (key, getattr(self, key))
+      for key in self.__slots__]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):
-    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+    if not isinstance(other, self.__class__):
+      return False
+    for attr in self.__slots__:
+      my_val = getattr(self, attr)
+      other_val = getattr(other, attr)
+      if my_val != other_val:
+        return False
+    return True
 
   def __ne__(self, other):
     return not (self == other)
+
 
 class IpToLocation_result:
   """
@@ -179,6 +191,11 @@ class IpToLocation_result:
    - success
    - re
   """
+
+  __slots__ = [ 
+    'success',
+    're',
+   ]
 
   thrift_spec = (
     (0, TType.STRUCT, 'success', (Location, Location.thrift_spec), None, ), # 0
@@ -242,12 +259,20 @@ class IpToLocation_result:
     return value
 
   def __repr__(self):
-    L = ['%s=%r' % (key, value)
-      for key, value in self.__dict__.iteritems()]
+    L = ['%s=%r' % (key, getattr(self, key))
+      for key in self.__slots__]
     return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
   def __eq__(self, other):
-    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+    if not isinstance(other, self.__class__):
+      return False
+    for attr in self.__slots__:
+      my_val = getattr(self, attr)
+      other_val = getattr(other, attr)
+      if my_val != other_val:
+        return False
+    return True
 
   def __ne__(self, other):
     return not (self == other)
+
