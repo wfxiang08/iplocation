@@ -5,9 +5,10 @@ import time
 from ip_service.IpService import Client
 from rpc_thrift.config import RPC_DEFAULT_CONFIG, RPC_PROXY_ADDRESS, RPC_SERVICE
 from rpc_thrift.config import parse_config
-from rpc_thrift.utils import get_service_protocol
-from rpc_thrift.utils import get_base_protocol
+from rpc_thrift.utils import get_service_protocol, get_fast_transport, get_base_protocol
 
+
+FAST = True
 
 def main():
 
@@ -19,8 +20,13 @@ def main():
     endpoint = "60.29.255.199:5550"
     service = config[RPC_SERVICE]
 
-    get_base_protocol(endpoint)
-    protocol =  get_service_protocol(service)
+    if FAST:
+        get_fast_transport(endpoint)
+        protocol =  get_service_protocol(service, fast=True)
+    else:
+        get_base_protocol(endpoint)
+        protocol =  get_service_protocol(service)
+
     client = Client(protocol)
 
 
