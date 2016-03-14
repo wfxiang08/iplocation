@@ -4,7 +4,7 @@ if [ ! -d bin ] || [ ! -d src ] || [ ! -d pkg ]; then
 	echo "----------------"
 	exit -1
 fi
-source gvp
+export GOPATH="`pwd`/.godeps:`pwd`"
 echo "----------------"
 echo "\$GOPATH = ${GOPATH}"
 echo "----------------"
