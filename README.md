@@ -16,7 +16,7 @@
 	* git clone git@git.chunyu.me:infra/iplocation.git
 	* cd iplocation
 	* source start_env.sh
-	* cd src && gmp install (按照Godeps中的配置来布置环境)
+	* cd src && gpm install (按照Godeps中的配置来布置环境)
 
 * IDE(`Pycharm + Go plugin`)
 	* https://github.com/go-lang-plugin-org/go-lang-idea-plugin
