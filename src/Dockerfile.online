@@ -1,6 +1,6 @@
 FROM 123.59.151.144:5000/centos
 
-MAINTAINER luohongwei "wangfei@chunyu.me"
+MAINTAINER wangfei "wangfei@chunyu.me"
 
 RUN mkdir -p /usr/local/ip/
 
@@ -10,5 +10,6 @@ ADD iplocation /usr/local/ip/
 ADD control.sh /usr/local/ip/
 ADD config.online.ini /usr/local/ip/config.ini
 
-CMD /usr/local/ip/control.sh start
+# 脚本不能在后台运行
+CMD /usr/local/ip/iplocation -c /usr/local/ip/config.ini -L /usr/local/ip/log/ip.log &> /usr/local/ip/log/app.log
 
