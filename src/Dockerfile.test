@@ -12,5 +12,5 @@ ADD control.sh /usr/local/ip/
 ADD config.test.ini /usr/local/ip/config.ini
 
 # 脚本不能在后台运行
-CMD /usr/local/ip/iplocation -c /usr/local/ip/config.ini -L /usr/local/ip/log/ip.log &> /usr/local/ip/log/app.log
+# CMD /usr/local/ip/iplocation -c /usr/local/ip/config.ini -L /usr/local/ip/log/ip.log &> /usr/local/ip/log/app.log
 

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: iplocation-test
+spec:
+  replicas: 2
+  selector:
+    name: iplocation-test
+  template:
+    metadata:
+      labels:
+        name: iplocation-test
+    spec:
+      containers:
+      - name: iplocation-test
+        image: 123.59.151.144:5000/iplocation-test:v1
+        command: ["/usr/local/ip/iplocation", "-c", "/usr/local/ip/config.ini", "-L", "/usr/local/ip/log/ip.log"]
+        ports:
+        - containerPort: 80
