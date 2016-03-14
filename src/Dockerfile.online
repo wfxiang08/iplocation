@@ -3,6 +3,7 @@ FROM 123.59.151.144:5000/centos
 MAINTAINER wangfei "wangfei@chunyu.me"
 
 RUN mkdir -p /usr/local/ip/
+RUN mkdir -p /usr/local/ip/log
 
 ADD ip_query/qqwry.dat /usr/local/ip/qqwry.dat
 ADD iplocation /usr/local/ip/
