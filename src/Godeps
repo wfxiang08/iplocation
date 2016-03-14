@@ -1,0 +1,24 @@
+github.com/stretchr/testify v1.1.3
+
+
+# 来自rpc_proxy
+git.chunyu.me/infra/go_thrift cc787c9fa84babd54cdd65370a51eb86ca8108f6
+git.chunyu.me/infra/rpc_proxy master
+git.chunyu.me/golang/rpc_proxy_base master
+git.chunyu.me/infra/zkhelper cbb3c11e85586b81a54feb4ff704be9a57afde9c
+git.chunyu.me/infra/go-zookeeper e0fd52de7ea0f5b19eb29ad9fe2aa509414a4522
+github.com/c4pt0r/cfg 429e6985f0b07bceaa33b57ee612fbca4797a9a6
+github.com/mattn/go-colorable 3dac7b4f76f6e17fb39b768b89e3783d16e237fe
+github.com/fatih/color v0.1
+github.com/mattn/go-isatty 56b76bdf51f7708750eac80fa38b952bb9f32639
+github.com/ngaut/log 37d3e0f43b4fe05429e1adb75e835bf31fc1bba6
+github.com/ngaut/pools 6352e005618615ffaf1cb1c6622b8e91435751fe
+github.com/ngaut/logging f98f5f4cd523647678af6f1726c5b5a14c9193d0
+github.com/ngaut/sync2 7a24ed77b2efb460c1468b7dc917821c66e80e55
+github.com/docopt/docopt-go 0.6.1
+github.com/shiena/ansicolor a422bbe96644373c5753384a59d678f7d261ff10
+git.chunyu.me/golang/cyutils e54e44df390057e129cb1086a4b2a413ba79967a
+
+# 其他
+
+github.com/qiniu/iconv  7a341d65c7dd46365a04ed9ad55e46c52f317ab2

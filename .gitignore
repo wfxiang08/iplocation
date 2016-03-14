@@ -1,5 +1,6 @@
 /src/config.ini
 *.pyc
+/.godeps
 /.idea
 /src/examples/.idea
 /src/examples/dist

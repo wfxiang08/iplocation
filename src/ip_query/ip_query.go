@@ -5,7 +5,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"git.chunyu.me/infra/rpc_proxy/utils/log"
+	log "git.chunyu.me/golang/cyutils/utils/rolling_log"
 	"github.com/qiniu/iconv"
 	"io/ioutil"
 	"net"
@@ -29,9 +29,9 @@ type IpInfoService struct {
 	IpIndexes []*ipIndex
 	IpRecords []*IpRecord
 
-	termBuff []byte
-	cd       *iconv.Iconv
-	fbuf     []byte
+	termBuff  []byte
+	cd        *iconv.Iconv
+	fbuf      []byte
 }
 
 func (p *IpInfoService) Ip2Address(ip string) (city string, detail string) {
@@ -85,7 +85,7 @@ func (p *IpInfoService) LoadData(filename string) error {
 		return err
 	}
 
-	p.fbuf, err = ioutil.ReadAll(bufio.NewReaderSize(fid, 7*1024*1024))
+	p.fbuf, err = ioutil.ReadAll(bufio.NewReaderSize(fid, 7 * 1024 * 1024))
 	fid.Close()
 	if err != nil {
 		return err
@@ -168,13 +168,13 @@ func (p *IpInfoService) getAddr(offset uint32) (country string, city string) {
 
 	} else if order == 2 {
 		offset += 1
-		country = p.getAreaAddr(byte3ToUint32(p.fbuf[offset : offset+3]))
+		country = p.getAreaAddr(byte3ToUint32(p.fbuf[offset : offset + 3]))
 		offset += 3
 		city = p.getAreaAddr(offset)
 
 	} else {
 		country, idx = p.getString(p.fbuf[offset:len(p.fbuf)])
-		city, _ = p.getString(p.fbuf[offset+uint32(idx) : len(p.fbuf)])
+		city, _ = p.getString(p.fbuf[offset + uint32(idx) : len(p.fbuf)])
 	}
 	return
 }
@@ -183,7 +183,7 @@ func (p *IpInfoService) getAreaAddr(offset uint32) string {
 	order := p.fbuf[offset]
 	if order == 1 || order == 2 {
 		offset += 1
-		offset = byte3ToUint32(p.fbuf[offset : offset+3])
+		offset = byte3ToUint32(p.fbuf[offset : offset + 3])
 		return p.getAreaAddr(offset)
 	} else {
 		result, _ := p.getString(p.fbuf[offset:len(p.fbuf)])
@@ -227,7 +227,7 @@ func inet_aton(ipnr string) (intIp uint32, err error) {
 	}
 	var (
 		sum uint32
-		b0  int
+		b0 int
 	)
 	shift := uint32(24)
 	for i := 0; i < 4; i++ {

@@ -1,10 +1,7 @@
 package ip_query
 
 import (
-	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
-	//	"log"
-	// services "git.chunyu.me/infra/rpc_proxy/gen-go/rpc_thrift/services"
-	//	"git.chunyu.me/infra/rpc_proxy/utils/log"
+	ips "gen-go/ip_service"
 	"strings"
 )
 
@@ -37,10 +34,10 @@ func (p *Handler) IpToLocation(ip string) (r *ips.Location, err error) {
 }
 
 const (
-	PROVINCE   = "省"
+	PROVINCE = "省"
 	ZIZHI_AREA = "自治区"
-	SAR        = "特别行政区"
-	CITY       = "市"
+	SAR = "特别行政区"
+	CITY = "市"
 )
 
 //
@@ -51,30 +48,30 @@ func getProvince(city string) string {
 	// 返回省
 	idx := strings.Index(city, PROVINCE)
 	if idx != -1 {
-		return city[0 : idx+len(PROVINCE)]
+		return city[0 : idx + len(PROVINCE)]
 	}
 
 	// 返回自治区
 	idx = strings.Index(city, ZIZHI_AREA)
 	if idx != -1 {
-		return city[0 : idx+len(ZIZHI_AREA)]
+		return city[0 : idx + len(ZIZHI_AREA)]
 	}
 
 	// 返回特别行政区
 	idx = strings.Index(city, ZIZHI_AREA)
 	if idx != -1 {
-		return city[0 : idx+len(ZIZHI_AREA)]
+		return city[0 : idx + len(ZIZHI_AREA)]
 	}
 
 	// 返回特别行政区
 	idx = strings.Index(city, SAR)
 	if idx != -1 {
-		return city[0 : idx+len(SAR)]
+		return city[0 : idx + len(SAR)]
 	}
 
 	idx = strings.Index(city, CITY)
 	if idx != -1 {
-		return city[0 : idx+len(CITY)]
+		return city[0 : idx + len(CITY)]
 	}
 
 	return city

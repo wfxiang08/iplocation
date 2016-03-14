@@ -6,8 +6,8 @@ package ip_service
 import (
 	"bytes"
 	"fmt"
-	"git.apache.org/thrift.git/lib/go/thrift"
-	"git.chunyu.me/infra/rpc_proxy/gen-go/rpc_thrift/services"
+	"git.chunyu.me/golang/rpc_proxy_base/src/rpc_thrift/services"
+	"git.chunyu.me/infra/go_thrift/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)

@@ -6,8 +6,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"git.apache.org/thrift.git/lib/go/thrift"
-	"git.chunyu.me/infra/rpc_proxy/gen-go/ip_service"
+	"ip_service"
+	"git.chunyu.me/infra/go_thrift/thrift"
 	"math"
 	"net"
 	"net/url"
