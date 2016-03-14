@@ -1,0 +1,14 @@
+FROM 123.59.151.144:5000/centos
+
+MAINTAINER luohongwei "wangfei@chunyu.me"
+
+RUN mkdir -p /usr/local/ip/
+
+ADD ip_query/qqwry.dat /usr/local/ip/qqwry.dat
+ADD iplocation /usr/local/ip/
+
+ADD control.sh /usr/local/ip/
+ADD config.test.ini /usr/local/ip/config.ini
+
+CMD /usr/local/ip/control.sh start
+

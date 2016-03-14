@@ -30,3 +30,11 @@
 		    * 选择Go Libraries, 选择Global Libraries(忽略), 使用Project libraries)
 	    * 保证Pycharm的配置和source gvp的设置是一致的(在命令行可以编译，在IDE也可以编译)
 		    * 这就是为什么在最后时刻我们放弃: LiteIDE
+
+* Dockerfile的管理:
+	* docker build `-f Dockerfile.online` .
+	* docker build -f Dockerfile.test `.`
+	* 运行容器:
+		* `docker run -it` -v /usr/local/rpc_proxy:/usr/local/rpc_proxy `123.59.151.144:5000/centos`
+		* docker tag
+		* docker push
