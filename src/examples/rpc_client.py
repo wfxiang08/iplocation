@@ -29,6 +29,16 @@ def main():
 
     print "测试 IpToLocation 接口的时延:"
     total_times = 10000
+    print "测试 IpToLocation 接口的时延:"
+    t1 = time.time()
+    for i in range(0, total_times):
+        try:
+            result = client.IpToLocation("60.29.255.197")
+        except Exception as e:
+            print "Exception: ", e
+    t = time.time() - t1
+    print "Elapsed: %.3fms" % (t / total_times * 1000)
+
   
 
     print "测试 ping1 接口的时延:"
