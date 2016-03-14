@@ -1,9 +1,9 @@
-/config.ini
+/src/config.ini
 *.pyc
 /.idea
-/examples/.idea
-/examples/dist
-/examples/MANIFEST
-/gen-py/
-/iplocation
-/qqwry.dat
+/src/examples/.idea
+/src/examples/dist
+/src/examples/MANIFEST
+/src/gen-py/
+/src/iplocation
+/src/qqwry.dat
