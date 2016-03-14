@@ -3,6 +3,8 @@
 /.godeps
 /.idea
 /src/examples/.idea
+/src/examples/ENV
+/src/examples/config.ini
 /src/examples/dist
 /src/examples/MANIFEST
 /src/gen-py/
