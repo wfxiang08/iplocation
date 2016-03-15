@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"git.apache.org/thrift.git/lib/go/thrift"
-	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
-	//	ip_query "git.chunyu.me/infra/iplocation/ip_query"
-	proxy "git.chunyu.me/infra/rpc_proxy/proxy"
+	rpc_utils "git.chunyu.me/golang/rpc_proxy_base/src/rpc_utils"
+	proxy "git.chunyu.me/infra/rpc_proxy/src/proxy"
+	ips "gen-go/ip_service"
 	"sync"
 	"time"
+	"git.chunyu.me/infra/go_thrift/thrift"
 )
 
 const (
@@ -20,7 +20,7 @@ func main() {
 	useProxy := true
 	var (
 		sockFile string
-		socket   thrift.TTransport
+		socket thrift.TTransport
 		protocol thrift.TProtocol
 	)
 	wait := &sync.WaitGroup{}
@@ -30,7 +30,7 @@ func main() {
 		var client *ips.IpServiceClient
 		if useProxy {
 			sockFile = "/usr/local/rpc_proxy/online_proxy.sock"
-			sk, _ := proxy.NewTUnixDomain(sockFile)
+			sk, _ := rpc_utils.NewTUnixDomain(sockFile)
 			//				sockFile = "127.0.0.1:5550"
 			//				sk, _ := thrift.NewTSocket(sockFile)
 
@@ -63,14 +63,14 @@ func main() {
 		iteration := 100000
 		for k := 0; k < iteration; k++ {
 
-			err := client.Ping1()
+			err := client.Ping()
 			if err != nil {
 				fmt.Println("Error: ", err)
 				break
 			}
 		}
 		t2 := time.Now().UnixNano()
-		fmt.Printf("T: %.3fms", float64(t2-t1)*0.000001/float64(iteration))
+		fmt.Printf("T: %.3fms", float64(t2 - t1) * 0.000001 / float64(iteration))
 
 		wait.Done()
 	}()

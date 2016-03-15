@@ -12,6 +12,5 @@ ADD ip_service /root/goprojects/iplocation/src/examples/ip_service/
 ADD config.test.ini /root/goprojects/iplocation/src/examples/config.ini
 ADD rpc_*.py /root/goprojects/iplocation/src/examples/
 
-
-VOLUME ["/usr/local/rpc_proxy"]
+# VOLUME ["/usr/local/rpc_proxy"]
 
