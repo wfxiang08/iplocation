@@ -32,9 +32,9 @@
 		    * 这就是为什么在最后时刻我们放弃: LiteIDE
 
 * Dockerfile的管理:
-	* docker build `-f Dockerfile.online` .
-	* docker build -f Dockerfile.test `.`
+	* rocker build --push
 	* 运行容器:
-		* `docker run -it` -v /usr/local/rpc_proxy:/usr/local/rpc_proxy `123.59.151.144:5000/centos`
-		* docker tag
-		* docker push
+		* `docker run -it` -v /usr/local/ip/log:/usr/local/ip/log `10.9.49.222:5000/iplocation:v1`
+* 上线:
+	* `kubectl create -f iplocation-test-rc.yaml`
+	* `kubectl create -f iplocation-online-rc.yaml`
