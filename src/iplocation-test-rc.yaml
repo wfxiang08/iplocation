@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: iplocation-test
-        image: 10.9.49.222:5000/iplocation:v1
+        image: 10.9.49.222:5000/iplocation:v2
         command: ["/usr/local/ip/iplocation", "-c", "/usr/local/ip/config.test.ini", "-L", "/usr/local/ip/log/ip-test.log"]
         volumeMounts:
         - name: logs

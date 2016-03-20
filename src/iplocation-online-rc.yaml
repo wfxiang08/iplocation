@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: iplocation-online
-        image: 10.9.49.222:5000/iplocation:v1
+        image: 10.9.49.222:5000/iplocation:v2
         command: ["/usr/local/ip/iplocation", "-c", "/usr/local/ip/config.online.ini", "-L", "/usr/local/ip/log/ip-online.log"]
         volumeMounts:
         - name: logs

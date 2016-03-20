@@ -9,11 +9,11 @@ ADD ip_query/qqwry.dat /usr/local/ip/qqwry.dat
 ADD iplocation /usr/local/ip/
 
 ADD control.sh /usr/local/ip/
-ADD config.test.ini /usr/local/geo/config.test.ini
-ADD config.online.ini /usr/local/geo/config.online.ini
+ADD config.test.ini /usr/local/ip/config.test.ini
+ADD config.online.ini /usr/local/ip/config.online.ini
 
 EXPOSE 80
 
-PUSH 10.9.49.222:5000/iplocation:v1
+PUSH 10.9.49.222:5000/iplocation:v2
 
 
