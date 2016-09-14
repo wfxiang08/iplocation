@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	rpc_utils "git.chunyu.me/golang/rpc_proxy_base/src/rpc_utils"
-	proxy "git.chunyu.me/infra/rpc_proxy/src/proxy"
+	"git.chunyu.me/golang/rpc_proxy_base/src/rpc_utils"
+	"git.chunyu.me/infra/rpc_proxy/proxy"
 	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
 	"sync"
 	"time"

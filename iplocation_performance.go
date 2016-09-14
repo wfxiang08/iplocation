@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"git.apache.org/thrift.git/lib/go/thrift"
+	"git.chunyu.me/infra/go_thrift/thrift"
 	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
-	//	ip_query "git.chunyu.me/infra/iplocation/ip_query"
-	proxy "git.chunyu.me/infra/rpc_proxy/proxy"
-	"git.chunyu.me/infra/rpc_proxy/utils/log"
+	"git.chunyu.me/golang/rpc_proxy_base/src/rpc_utils"
+	"git.chunyu.me/infra/rpc_proxy/proxy"
+	log "git.chunyu.me/golang/cyutils/utils/rolling_log"
 	"math/rand"
 	"sync"
 	"time"
@@ -32,7 +32,7 @@ func main() {
 			var client *ips.IpServiceClient
 			if useProxy {
 				sockFile = "/usr/local/rpc_proxy/proxy.sock"
-				sk, _ := proxy.NewTUnixDomain(sockFile)
+				sk, _ := rpc_utils.NewTUnixDomain(sockFile)
 				//				sockFile = "127.0.0.1:5550"
 				//				sk, _ := thrift.NewTSocket(sockFile)
 

@@ -2,7 +2,7 @@ package main
 
 import (
 	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
-	proxy "git.chunyu.me/infra/rpc_proxy/src/proxy"
+	"git.chunyu.me/infra/rpc_proxy/proxy"
 	"git.chunyu.me/infra/iplocation/ip_query"
 )
 
