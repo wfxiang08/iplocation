@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	ips "gen-go/ip_service"
+	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
 	rpc_utils "git.chunyu.me/golang/rpc_proxy_base/src/rpc_utils"
 	proxy "git.chunyu.me/infra/rpc_proxy/src/proxy"
 	"sync"

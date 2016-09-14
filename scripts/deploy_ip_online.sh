@@ -18,4 +18,4 @@ scp iplocation root@${host_name}:/usr/local/ip/iplocation
 scp control.sh  root@${host_name}:/usr/local/ip/
 scp ip_query/qqwry.dat  root@${host_name}:/usr/local/ip/qqwry.dat
 scp config.online.ini   root@${host_name}:/usr/local/ip/config.ini
-# scp scripts/iplocation.conf.upstart  root@${host_name}:/etc/init/iplocation.conf
+scp scripts/iplocation.service root@${host_name}:/lib/systemd/system/iplocation.service

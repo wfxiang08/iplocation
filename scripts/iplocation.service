@@ -1,0 +1,14 @@
+[Unit]
+Description=Iplocation Service
+After=network.target
+
+[Service]
+WorkingDirectory=/usr/local/ip/
+ExecStart=/usr/local/ip/iplocation --work-dir /usr/local/ip@upstart -c /usr/local/ip/config.ini -L /usr/local/ip/log/ip.log
+# StandardOutput=null
+
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target
