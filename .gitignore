@@ -4,3 +4,4 @@ vendor
 .idea
 /gen-py/
 /src/service_*
+/src/ip_service-remote
