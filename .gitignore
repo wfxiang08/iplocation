@@ -3,5 +3,4 @@
 vendor
 .idea
 /gen-py/
-/src/iplocation
-/src/qqwry.dat
+/src/service_*
