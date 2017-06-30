@@ -1,7 +1,7 @@
 package ip_query
 
 import (
-	ips "git.chunyu.me/infra/iplocation/gen-go/ip_service"
+	ips "gen-go/ip_service"
 	"strings"
 )
 

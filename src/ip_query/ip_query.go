@@ -5,7 +5,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	log "git.chunyu.me/golang/cyutils/utils/rolling_log"
+	log "github.com/wfxiang08/cyutils/utils/rolling_log"
 	"github.com/qiniu/iconv"
 	"io/ioutil"
 	"net"

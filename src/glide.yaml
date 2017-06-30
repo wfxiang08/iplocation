@@ -1,0 +1,10 @@
+package: .
+import:
+- package: github.com/qiniu/iconv
+- package: github.com/wfxiang08/go_thrift
+  subpackages:
+  - thrift
+testImport:
+- package: github.com/stretchr/testify
+  subpackages:
+  - assert

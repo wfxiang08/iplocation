@@ -1,0 +1,32 @@
+hash: eca4be3ab3156663b67c26c77cde024bb493684fa1a5f30997bc412dd5baf40d
+updated: 2017-06-30T23:20:30.099983143+08:00
+imports:
+- name: github.com/qiniu/iconv
+  version: e9ee0ddd1a3a29262740aa08ed8ac740f23bc4a0
+- name: github.com/wfxiang08/cyutils
+  version: dfb8bc2b5402cb534e3f53cbd9fc3897820f7b07
+  subpackages:
+  - utils/errors
+  - utils/rolling_log
+  - utils/trace
+- name: github.com/wfxiang08/go_thrift
+  version: a20c9e7b36a5ce2ff784c397d0e9b85b55b496c7
+  subpackages:
+  - thrift
+- name: github.com/wfxiang08/thrift_rpc_base
+  version: acf68c5178b4d571f60516e88e5977681536fd78
+  subpackages:
+  - rpc_thrift/services
+testImports:
+- name: github.com/davecgh/go-spew
+  version: 5215b55f46b2b919f50a1df0eaa5886afe4e3b3d
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
+  subpackages:
+  - difflib
+- name: github.com/stretchr/testify
+  version: 6cb3b85ef5a0efef77caef88363ec4d4b5c0976d
+  subpackages:
+  - assert
