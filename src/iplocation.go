@@ -2,7 +2,7 @@ package main
 
 import (
 	ips "gen-go/ip_service"
-	"github.com/wfxiang08/rpc_proxy/proxy"
+	"github.com/wfxiang08/rpc_proxy/src/proxy"
 	"ip_query"
 )
 

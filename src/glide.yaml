@@ -4,6 +4,7 @@ import:
 - package: github.com/wfxiang08/go_thrift
   subpackages:
   - thrift
+- package: github.com/wfxiang08/rpc_proxy
 testImport:
 - package: github.com/stretchr/testify
   subpackages:

@@ -8,7 +8,7 @@ import (
 )
 
 //
-// go test git.chunyu.me/infra/iplocation/ip_query -v -run "TestIpLocation"
+// go test ip_query -v -run "TestIpLocation"
 //
 
 func TestIpLocation(t *testing.T) {
